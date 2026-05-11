@@ -51,7 +51,12 @@ export default class App extends Component {
         // audio.play()
 
         pronounAudio.src=this.state.pronounSrc
-        pronounAudio.play()
+        const playPromise = pronounAudio.play()
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                console.log("Audio play prevented by browser policy:", error)
+            })
+        }
     }
     getNewWord = () => {
         document.getElementById("hideinput").value="";
